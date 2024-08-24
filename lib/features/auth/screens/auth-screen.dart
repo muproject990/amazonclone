@@ -38,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
       backgroundColor: GlobalVariables.greyBackgroundCOlor,
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,6 +87,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       const SizedBox(height: 10),
                       CustomTextfield(
                         controller: _passwordController,
+                        obscureText: true,
                         hintText: "Password",
                       ),
                       const SizedBox(height: 10),
@@ -99,6 +100,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
             ListTile(
+              tileColor: _authMode == Auth.signin
+                  ? GlobalVariables.backgroundColor
+                  : GlobalVariables.greyBackgroundCOlor,
               title: const Text(
                 "Sign in...",
                 style: TextStyle(
@@ -115,7 +119,35 @@ class _AuthScreenState extends State<AuthScreen> {
                   });
                 },
               ),
-            )
+            ),
+            if (_authMode == Auth.signin)
+              Container(
+                padding: const EdgeInsets.all(9),
+                color: GlobalVariables.backgroundColor,
+                child: Form(
+                  key: _signInformKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      CustomTextfield(
+                        controller: _emailController,
+                        hintText: "Email",
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextfield(
+                        controller: _passwordController,
+                        hintText: "Password",
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomButton(
+                        text: "Sign In",
+                        onTap: () {},
+                      )
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       )),
