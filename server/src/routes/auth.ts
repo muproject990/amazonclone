@@ -56,16 +56,13 @@ authRouter.post("/api/login", async (req, res) => {
     // bcrtypt to compare hashed passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invald email or password" });
     }
     // decode bcrypted password
 
     // implement jwt authentication
-    const token = jwt.sign(
-      { email: user.email, password: user.password },
-      "aavash"
-    );
-    res.json({ message: "Login successful", token });
+    const token = jwt.sign({ id: user._id }, "aavash");
+    res.json({ token, ...user._doc });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
