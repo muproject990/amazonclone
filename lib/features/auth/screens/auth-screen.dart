@@ -1,6 +1,7 @@
 import 'package:ecommerce_android_app/common/widgets/custom_button.dart';
 import 'package:ecommerce_android_app/common/widgets/custom_textfield.dart';
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
+import 'package:ecommerce_android_app/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -18,18 +19,27 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   Auth _authMode = Auth.signin;
+  final AuthService authService = AuthService();
+
   final _signUpformKey = GlobalKey<FormState>();
   final _signInformKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
   }
 
   @override
@@ -93,7 +103,12 @@ class _AuthScreenState extends State<AuthScreen> {
                       const SizedBox(height: 10),
                       CustomButton(
                         text: "Sign Up",
-                        onTap: () {},
+                        onTap: () {
+                          print("tapped");
+                          if (_signUpformKey.currentState!.validate()) {
+                            signUpUser();
+                          }
+                        },
                       )
                     ],
                   ),
