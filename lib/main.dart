@@ -1,5 +1,7 @@
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
 import 'package:ecommerce_android_app/features/auth/screens/auth-screen.dart';
+import 'package:ecommerce_android_app/features/auth/services/auth_service.dart';
+import 'package:ecommerce_android_app/features/home/screens/home_screen.dart';
 import 'package:ecommerce_android_app/providers/user_provider.dart';
 import 'package:ecommerce_android_app/router.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authService.getUserData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,6 +47,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
-        home: AuthScreen());
+        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const HomeScreen()
+            : const AuthScreen());
   }
 }

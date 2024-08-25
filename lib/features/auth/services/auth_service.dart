@@ -71,4 +71,45 @@ class AuthService {
       showSnackBar(context, e.toString());
     }
   }
+
+  Future<void> getUserData(
+    BuildContext context,
+  ) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+      if (token != null) {
+        prefs.setString('token', '');
+      }
+
+      var tokenRes = await http.post(
+        Uri.parse(
+          '$uri/tokenIsValid',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=utf-8',
+          'token': token!
+        },
+      );
+      print(tokenRes.body);
+
+      var response = jsonDecode(tokenRes.body);
+      print(response);
+
+      if (response == true) {
+        // Todo Get User data
+
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=utf-8',
+            'token': token
+          },
+        );
+
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
+    } catch (e) {}
+  }
 }
