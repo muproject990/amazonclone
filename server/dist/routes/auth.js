@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("../models/user"));
+const auth_1 = __importDefault(require("../middleware/auth"));
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 const authRouter = express_1.default.Router();
@@ -59,15 +60,50 @@ authRouter.post("/api/login", (req, res) => __awaiter(void 0, void 0, void 0, fu
         // bcrtypt to compare hashed passwords
         const isMatch = yield bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: "Invalid email or password" });
+            return res.status(400).json({ message: "Invald email or password" });
         }
         // decode bcrypted password
         // implement jwt authentication
-        const token = jwt.sign({ email: user.email, password: user.password }, "aavash");
-        res.json({ message: "Login successful", token });
+        const token = jwt.sign({ id: user._id }, "aavash");
+        res.json({ token });
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
+    }
+}));
+// ! Token is valid
+authRouter.post("/tokenIsValid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const token = req.header("token");
+        if (!token)
+            return res.json(false);
+        const varified = jwt.verify(token, "aavash");
+        if (!varified)
+            return res.json(false);
+        const user = yield user_1.default.findById(varified.id);
+        if (!user)
+            return res.json(false);
+        res.json(true);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}));
+// todo Middlleware implementation
+// get user data
+authRouter.get("/", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield user_1.default.findById(req.userId);
+        console.log(2, req.userId);
+        // Convert the Mongoose document to a plain JavaScript object
+        if (user != null) {
+            const userObject = user.toObject();
+            return res.json(Object.assign(Object.assign({}, userObject), { token: req.token }));
+        }
+        return res.status(404).json({ message: "User not found" });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }));
 exports.default = authRouter;

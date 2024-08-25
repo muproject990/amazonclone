@@ -1,5 +1,8 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import User from "../models/user";
+import auth from "../middleware/auth";
+import { AuthenticatedRequest } from "../middleware/auth"; // Adjust path based on where you define the interface
+
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
@@ -62,9 +65,49 @@ authRouter.post("/api/login", async (req, res) => {
 
     // implement jwt authentication
     const token = jwt.sign({ id: user._id }, "aavash");
-    res.json({ token, ...user._doc });
+    res.json({ token });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ! Token is valid
+
+authRouter.post("/tokenIsValid", async (req, res) => {
+  try {
+    const token = req.header("token");
+    if (!token) return res.json(false);
+    const varified = jwt.verify(token, "aavash");
+    if (!varified) return res.json(false);
+
+    const user = await User.findById(varified.id);
+
+    if (!user) return res.json(false);
+
+    res.json(true);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// todo Middlleware implementation
+// get user data
+
+authRouter.get("/", auth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    console.log(2, req.userId);
+
+    // Convert the Mongoose document to a plain JavaScript object
+    if (user != null) {
+      const userObject = user.toObject();
+      return res.json({ ...userObject, token: req.token });
+    }
+
+    return res.status(404).json({ message: "User not found" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 });
 
