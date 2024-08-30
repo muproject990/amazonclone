@@ -1,23 +1,29 @@
 import 'package:ecommerce_android_app/features/accounts/screens/account_screen.dart';
+import 'package:ecommerce_android_app/features/admin/screens/post_screen.dart';
 import 'package:ecommerce_android_app/features/home/screens/cart_screen.dart';
 import 'package:ecommerce_android_app/features/home/screens/home_layout.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class AdminScreen extends StatefulWidget {
   static const String routeName = 'home';
 
-  const HomeScreen({super.key});
+  const AdminScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  int _currentIndex = 0;
+class _AdminScreenState extends State<AdminScreen>
+    with TickerProviderStateMixin {
+  int _currentIndex = 2;
   final List<Widget> _screens = [
-    const HomeLayout(),
-    const AccountScreen(),
-    const CartScreen(),
+    const PostScreen(),
+    const Center(
+      child: Text("Analytics Page"),
+    ),
+    const Center(
+      child: Text("Cart Page"),
+    ),
   ];
 
   late AnimationController _iconAnimationController;
@@ -62,13 +68,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             index: 0,
           ),
           _buildNavBarItem(
-            icon: const Icon(Icons.person),
-            label: "Profile",
+            icon: const Icon(Icons.analytics_outlined),
+            label: "Analytics",
             index: 1,
           ),
           _buildNavBarItem(
-            icon: const Icon(Icons.shopping_cart),
-            label: "Cart",
+            icon: const Icon(Icons.all_inbox_outlined),
+            label: "Inbox",
             index: 2,
           ),
         ],

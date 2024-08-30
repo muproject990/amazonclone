@@ -1,7 +1,8 @@
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
-import 'package:ecommerce_android_app/features/account/widgets/below_appbar.dart';
-import 'package:ecommerce_android_app/features/account/widgets/orders.dart';
-import 'package:ecommerce_android_app/features/account/widgets/top_btn.dart';
+
+import 'package:ecommerce_android_app/features/accounts/widgets/below_appbar.dart';
+import 'package:ecommerce_android_app/features/accounts/widgets/orders.dart';
+import 'package:ecommerce_android_app/features/accounts/widgets/top_btn.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {

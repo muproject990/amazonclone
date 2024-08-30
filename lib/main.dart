@@ -1,4 +1,5 @@
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
+import 'package:ecommerce_android_app/features/admin/screens/admin_screen.dart';
 import 'package:ecommerce_android_app/features/auth/screens/auth-screen.dart';
 import 'package:ecommerce_android_app/features/auth/services/auth_service.dart';
 import 'package:ecommerce_android_app/features/home/screens/home_screen.dart';
@@ -48,7 +49,9 @@ class _MyAppState extends State<MyApp> {
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
         home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-            ? const HomeScreen()
+            ? Provider.of<UserProvider>(context).user.type == 'user'
+                ? const HomeScreen()
+                : const AdminScreen()
             : const AuthScreen());
   }
 }

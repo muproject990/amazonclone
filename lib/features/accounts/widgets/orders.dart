@@ -1,5 +1,5 @@
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
-import 'package:ecommerce_android_app/features/account/widgets/single_product.dart';
+import 'package:ecommerce_android_app/features/accounts/widgets/single_product.dart';
 import 'package:flutter/material.dart';
 
 class Orders extends StatefulWidget {

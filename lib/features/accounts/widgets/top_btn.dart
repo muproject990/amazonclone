@@ -1,4 +1,4 @@
-import 'package:ecommerce_android_app/features/account/widgets/account_btn.dart';
+import 'package:ecommerce_android_app/features/accounts/widgets/account_btn.dart';
 import 'package:flutter/material.dart';
 
 class TopBtn extends StatefulWidget {
