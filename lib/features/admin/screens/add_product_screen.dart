@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecommerce_android_app/common/widgets/custom_button.dart';
 import 'package:ecommerce_android_app/common/widgets/custom_textfield.dart';
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
-import 'package:flutter/foundation.dart';
+import 'package:ecommerce_android_app/constants/utils.dart';
 import 'package:flutter/material.dart';
 
 class AddProductScreen extends StatefulWidget {
@@ -40,6 +44,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
     "Fashion"
   ];
 
+  List<File> images = [];
+
+  void selectImages() async {
+    var res = await pickImages();
+    setState(() {
+      images = res;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,38 +80,60 @@ class _AddProductScreenState extends State<AddProductScreen> {
           padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
-              DottedBorder(
-                borderType: BorderType.RRect,
-                radius: const Radius.circular(10),
-                child: Center(
-                  child: Container(
-                    padding: EdgeInsets.only(top: 15),
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Column(
-                      children: [
-                        Icon(
-                          Icons.folder_open,
-                          size: 40,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Select Book Images ",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
+              const SizedBox(height: 20),
+              images.isNotEmpty
+                  ? CarouselSlider(
+                      items: images.map(
+                        (i) {
+                          return Builder(
+                            builder: (BuildContext context) => Image.file(
+                              i,
+                              fit: BoxFit.cover,
+                              height: 200,
+                            ),
+                          );
+                        },
+                      ).toList(),
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: 200,
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: selectImages,
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(10),
+                        child: Center(
+                          child: Container(
+                            padding: EdgeInsets.only(top: 15),
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Column(
+                              children: [
+                                Icon(
+                                  Icons.folder_open,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "Select Book Images ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 10,
               ),
