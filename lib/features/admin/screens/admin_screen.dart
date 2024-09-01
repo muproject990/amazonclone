@@ -1,7 +1,4 @@
-import 'package:ecommerce_android_app/features/accounts/screens/account_screen.dart';
 import 'package:ecommerce_android_app/features/admin/screens/post_screen.dart';
-import 'package:ecommerce_android_app/features/home/screens/cart_screen.dart';
-import 'package:ecommerce_android_app/features/home/screens/home_layout.dart';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatefulWidget {
