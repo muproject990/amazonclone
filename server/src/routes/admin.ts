@@ -35,7 +35,7 @@ adminRouter.post(
 );
 
 adminRouter.get(
-  "/admin/add-books",
+  "/admin/get-books",
   admin,
   async (req: AuthenticatedRequest, res: Response) => {
     try {
