@@ -34,6 +34,17 @@ adminRouter.post(
   }
 );
 
-
+adminRouter.get(
+  "/admin/add-books",
+  admin,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const products = await Product.find({});//Give list of products
+      res.json({ products });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
 
 export default adminRouter;
