@@ -1,5 +1,6 @@
 import 'package:ecommerce_android_app/common/widgets/loader.dart';
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
+import 'package:ecommerce_android_app/features/accounts/widgets/single_product.dart';
 import 'package:ecommerce_android_app/features/admin/screens/add_product_screen.dart';
 import 'package:ecommerce_android_app/features/admin/services/admin_services.dart';
 import 'package:ecommerce_android_app/models/product.dart';
@@ -50,9 +51,43 @@ class _PostScreenState extends State<PostScreen> {
                 ),
               ),
             ),
-            body: const Center(
-              child: Text('Products'),
-            ),
+            body: GridView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: products!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) {
+                  final productData = products![index];
+                  return Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.1,
+                        height: 140,
+                        child: SingleProduct(
+                          image: productData.images[0],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: Text(
+                                productData.name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.delete_outline))
+                        ],
+                      )
+                    ],
+                  );
+                }),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActionButton(
