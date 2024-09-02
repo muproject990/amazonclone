@@ -7,6 +7,7 @@ import 'package:ecommerce_android_app/common/widgets/custom_button.dart';
 import 'package:ecommerce_android_app/common/widgets/custom_textfield.dart';
 import 'package:ecommerce_android_app/constants/globalvaariables.dart';
 import 'package:ecommerce_android_app/constants/utils.dart';
+import 'package:ecommerce_android_app/features/admin/services/admin_services.dart';
 import 'package:flutter/material.dart';
 
 class AddProductScreen extends StatefulWidget {
@@ -22,12 +23,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
   String category = "Mobiles";
+  final _addProductFormKey = GlobalKey<FormState>();
+  bool _isBtnDisabled = false;
 
   @override
   void dispose() {
-    // TODO: implement dispose
     bookNameController.dispose();
     descriptionController.dispose();
     priceController.dispose();
@@ -45,6 +48,36 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
 
   List<File> images = [];
+
+  void sellProduct() {
+    if (_addProductFormKey.currentState!.validate() &&
+        images.isNotEmpty &&
+        _isNumeric(priceController.text) &&
+        _isNumeric(quantityController.text)) {
+      double price = double.parse(priceController.text);
+      double quantity = double.parse(quantityController.text);
+
+      adminServices.sellBooks(
+        context: context,
+        name: bookNameController.text,
+        description: descriptionController.text,
+        price: price,
+        quantity: quantity,
+        category: category,
+        images: images,
+      );
+      setState(() {
+        _isBtnDisabled = true; //
+      });
+    } else {
+      showSnackBar(
+          context, "Enter a valid numeric value for the quantity and price");
+    }
+  }
+
+  bool _isNumeric(String value) {
+    return double.tryParse(value) != null;
+  }
 
   void selectImages() async {
     var res = await pickImages();
@@ -76,6 +109,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
           child: Form(
+        key: _addProductFormKey,
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
@@ -145,7 +179,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 height: 10,
               ),
               CustomTextfield(
-                controller: priceController,
+                controller: descriptionController,
                 hintText: "Description",
                 maxLines: 7,
               ),
@@ -153,14 +187,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 height: 10,
               ),
               CustomTextfield(
-                controller: quantityController,
+                controller: priceController,
                 hintText: "Price",
               ),
               const SizedBox(
                 height: 10,
               ),
               CustomTextfield(
-                controller: bookNameController,
+                controller: quantityController,
                 hintText: "Quantity",
               ),
               SizedBox(
@@ -184,7 +218,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              CustomButton(text: "Sell", onTap: () {})
+              _isBtnDisabled
+                  ? const CircularProgressIndicator()
+                  : CustomButton(
+                      text: "Sell",
+                      onTap: sellProduct,
+                    )
             ],
           ),
         ),

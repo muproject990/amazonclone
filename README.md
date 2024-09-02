@@ -9,3 +9,6 @@
  ![alt text](image-3.png)
 
  > carousel slider when image is selected
+
+
+ 

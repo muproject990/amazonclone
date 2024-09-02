@@ -66,6 +66,7 @@ authRouter.post("/api/login", (req, res) => __awaiter(void 0, void 0, void 0, fu
         // implement jwt authentication
         const token = jwt.sign({ id: user._id }, "aavash");
         res.json({ token });
+        // console.log(user);
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
@@ -94,7 +95,7 @@ authRouter.post("/tokenIsValid", (req, res) => __awaiter(void 0, void 0, void 0,
 authRouter.get("/", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield user_1.default.findById(req.userId);
-        console.log(2, req.userId);
+        // console.log(2, req.userId);
         // Convert the Mongoose document to a plain JavaScript object
         if (user != null) {
             const userObject = user.toObject();

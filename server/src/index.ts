@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth";
+import adminRouter from "./routes/admin";
 
 const app = express();
 const port = 3000;
@@ -8,6 +9,7 @@ const port = 3000;
 app.use(express.json());
 
 app.use(authRouter);
+app.use(adminRouter);
 
 mongoose
   .connect(
