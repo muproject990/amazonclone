@@ -45,3 +45,5 @@ If value contains objects that are not directly encodable to a JSON string (a va
       
 
 ![alt text](image-6.png)
+
+![alt text](image-7.png)
