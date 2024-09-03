@@ -59,7 +59,7 @@ adminRouter.post(
       }
       // console.log("here", products);
       // product = await product!.save();
-      res.json({ message: "Product Deleted Sucessfully", product });
+      res.json(product);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

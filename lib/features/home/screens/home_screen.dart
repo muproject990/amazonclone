@@ -1,5 +1,4 @@
 import 'package:ecommerce_android_app/features/accounts/screens/account_screen.dart';
-import 'package:ecommerce_android_app/features/home/screens/cart_screen.dart';
 import 'package:ecommerce_android_app/features/home/screens/home_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Widget> _screens = [
     const HomeLayout(),
     const AccountScreen(),
-    const CartScreen(),
+    const Text("cart"),
   ];
 
   late AnimationController _iconAnimationController;
