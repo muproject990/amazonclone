@@ -108,8 +108,12 @@ class AdminServices {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
+      if (product.id == null) {
+        throw Exception("Product ID is null");
+      }
+      print("product id ${product.id}");
       http.Response res = await http.post(
-        Uri.parse('$uri/admin/delete-product'),
+        Uri.parse('$uri/admin/delete-books'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'token': userProvider.user.token,
@@ -121,13 +125,14 @@ class AdminServices {
 
       httpErrorHandle(
         response: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           onSuccess();
         },
       );
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, " Catch vayo:== ${e.toString()}");
     }
   }
 }

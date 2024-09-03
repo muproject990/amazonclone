@@ -14,7 +14,6 @@ adminRouter.post(
     // Add product logic here
     try {
       const { name, description, quantity, images, category, price } = req.body;
-      console.log("here");
 
       // Create a new product instance
       let product = new Product({
@@ -39,8 +38,28 @@ adminRouter.get(
   admin,
   async (req: AuthenticatedRequest, res: Response) => {
     try {
-      const products = await Product.find({});//Give list of products
+      const products = await Product.find({}); //Give list of products
       res.json({ products });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+adminRouter.post(
+  "/admin/delete-books",
+  admin,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { id } = req.body;
+
+      let product = await Product.findByIdAndDelete({ _id: id });
+
+      if (!product) {
+        res.status(400).send({ message: "Product not found" });
+      }
+      // console.log("here", products);
+      // product = await product!.save();
+      res.json({ message: "Product Deleted Sucessfully", product });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

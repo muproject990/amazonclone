@@ -26,7 +26,7 @@ class Product {
       'images': images,
       'category': category,
       'price': price,
-      'id': id,
+      '_id': id,
     };
   }
 

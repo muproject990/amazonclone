@@ -73,6 +73,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       showSnackBar(
           context, "Enter a valid numeric value for the quantity and price");
     }
+    
   }
 
   bool _isNumeric(String value) {

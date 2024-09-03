@@ -19,7 +19,6 @@ class _PostScreenState extends State<PostScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchAllProducts(context);
   }
@@ -34,6 +33,17 @@ class _PostScreenState extends State<PostScreen> {
       context,
       AddProductScreen.routeName,
     );
+  }
+
+  void deleteProduct(Product product, int index) {
+    adminServices.deleteProduct(
+        context: context,
+        product: product,
+        onSuccess: () {
+          // todo: remove
+          products!.removeAt(index);
+          setState(() {});
+        });
   }
 
   @override
@@ -81,7 +91,8 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () =>
+                                  deleteProduct(productData, index),
                               icon: const Icon(Icons.delete_outline))
                         ],
                       )
