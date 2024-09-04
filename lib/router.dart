@@ -2,6 +2,7 @@ import 'package:ecommerce_android_app/features/admin/screens/add_product_screen.
 import 'package:ecommerce_android_app/features/auth/screens/auth-screen.dart';
 import 'package:ecommerce_android_app/features/home/screens/catogory_deal_screen.dart';
 import 'package:ecommerce_android_app/features/home/screens/home_screen.dart';
+import 'package:ecommerce_android_app/features/search/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -25,8 +26,17 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       var category = routeSettings.arguments as String;
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  CatogoryDealScreen(
+        builder: (_) => CatogoryDealScreen(
           category: category,
+        ),
+      );
+    case SearchScreen.routeName:
+      var query = routeSettings.arguments as String;
+
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => SearchScreen(
+          query: query,
         ),
       );
     default:

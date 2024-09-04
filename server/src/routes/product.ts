@@ -13,7 +13,26 @@ productRouter.get(
       console.log(req.query.category);
 
       const products = await Product.find({ category: req.query.category }); //Give list of products
-      res.json( products );
+      res.json(products);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+productRouter.get(
+  "/api/books/search/:name",
+  auth,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      // console.log("/api/books/search/:name ->", req.params.name);
+
+      const products = await Product.find({
+        name: { $regex: req.params.name, $options: "i" },
+      }); //Give list of products
+      // console.log(products);
+
+      res.json(products);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

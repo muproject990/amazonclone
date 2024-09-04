@@ -3,6 +3,7 @@ import 'package:ecommerce_android_app/features/home/widgets/address_box.dart';
 import 'package:ecommerce_android_app/features/home/widgets/carousel_image.dart';
 import 'package:ecommerce_android_app/features/home/widgets/deal_of_day.dart';
 import 'package:ecommerce_android_app/features/home/widgets/top_categories.dart';
+import 'package:ecommerce_android_app/features/search/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -13,6 +14,10 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
+  void navigatetoSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +40,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                     borderRadius: BorderRadius.circular(7),
                     elevation: 1,
                     child: TextFormField(
+                      onFieldSubmitted: navigatetoSearchScreen,
                       decoration: InputDecoration(
                         prefixIcon: InkWell(
                             onTap: () {},
