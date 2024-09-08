@@ -1,8 +1,6 @@
 import 'package:ecommerce_android_app/common/widgets/star.dart';
 import 'package:ecommerce_android_app/models/product.dart';
-import 'package:ecommerce_android_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchProduct extends StatelessWidget {
   final Product product;
@@ -46,7 +44,7 @@ class SearchProduct extends StatelessWidget {
                 Container(
                   width: 235,
                   padding: const EdgeInsets.only(left: 10, top: 5),
-                  child:  Star(
+                  child: Star(
                     rating: avgRating,
                   ),
                 ),

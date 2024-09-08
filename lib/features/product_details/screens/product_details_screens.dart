@@ -41,6 +41,7 @@ class _ProductDetailsScreensState extends State<ProductDetailsScreens> {
     if (totalRating != 0) {
       avgRating = totalRating / widget.product.rating!.length;
     }
+    // setState(() {});
   }
 
   void navigatetoSearchScreen(String query) {
