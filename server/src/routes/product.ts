@@ -39,4 +39,40 @@ productRouter.get(
   }
 );
 
+// post request route to rate the products
+
+productRouter.post(
+  "/api/rate-product",
+  auth,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { id, rating } = req.body;
+      let product = await Product.findById(id);
+      console.log(product);
+
+      if (product != null) {
+        for (let i = 0; i < product.ratings.length; i++) {
+          const element = product?.ratings[i];
+          if (product.ratings[i].userId === req.userId) {
+            product.ratings.splice(i, 1);
+          }
+        }
+        const ratingSchema = {
+          userId: req.userId,
+          rating,
+        };
+
+        product.ratings.push(ratingSchema);
+        product = await product.save();
+        console.log(product);
+
+        res.json(product);
+      }
+    } catch (error: any) {
+      console.log("here", error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 export default productRouter;

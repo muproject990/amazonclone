@@ -32,6 +32,7 @@ class _CatogoryDealScreenState extends State<CatogoryDealScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print("categorydeals build");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),

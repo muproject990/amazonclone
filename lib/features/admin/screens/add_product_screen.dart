@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecommerce_android_app/common/widgets/custom_button.dart';
@@ -141,7 +140,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         radius: const Radius.circular(10),
                         child: Center(
                           child: Container(
-                            padding: EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 15),
                             width: double.infinity,
                             height: 150,
                             decoration: BoxDecoration(

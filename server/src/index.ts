@@ -32,9 +32,6 @@ app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-
-
-
 // var listEndpoints = require("express-list-endpoints");
 
 // var endpoints = listEndpoints(app);

@@ -13,6 +13,7 @@ const admin = async (
   next: NextFunction
 ) => {
   try {
+  
     const token = req.header("token");
     console.log(token);
     if (!token)
