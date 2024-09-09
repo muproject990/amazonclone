@@ -23,6 +23,7 @@ const auth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(401).json({ message: "Unauthorized. Invalid token." });
         }
         req.userId = verified.id; // Assign the user ID or other payload data to req.user
+        // console.log("middleware", req.userId); //
         req.token = token;
         next();
     }

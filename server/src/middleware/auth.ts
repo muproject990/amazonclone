@@ -28,7 +28,7 @@ const auth = async (
     }
 
     req.userId = (verified as any).id; // Assign the user ID or other payload data to req.user
-
+    // console.log("middleware", req.userId); //
     req.token = token;
     next();
   } catch (error: any) {

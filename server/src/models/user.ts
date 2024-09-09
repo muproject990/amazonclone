@@ -1,6 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const cartItemSchema = new Schema({
+  productId: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
+});
+
+const userSchema = new Schema({
   name: { type: String, required: true, trim: true },
   email: {
     type: String,
@@ -26,10 +38,7 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
-  cart: [
-      
-    ]
-
+  cart: [cartItemSchema],
 });
 
 const User = mongoose.model("User", userSchema);

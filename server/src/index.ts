@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import authRouter from "./routes/auth";
 import adminRouter from "./routes/admin";
 import productRouter from "./routes/product";
+import userRouter from "./routes/user";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(authRouter);
 app.use(productRouter);
 app.use(adminRouter);
+app.use(userRouter);
 
 mongoose
   .connect(
