@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
 import admin from "../middleware/admin";
 import auth, { AuthenticatedRequest } from "../middleware/auth"; // Adjust path based on where you define the interface
-import Product from "../models/product";
+import { Product } from "../models/product";
+import ratingSchema from "../models/rating";
 
 const productRouter = express.Router();
 
@@ -62,7 +63,7 @@ productRouter.post(
           rating,
         };
 
-        product.ratings.push(ratingSchema);
+        product.ratings.push(ratingSchema as any);
         product = await product.save();
         console.log(product);
 
@@ -92,7 +93,7 @@ productRouter.get("/api/deal-of-day", auth, async (req, res) => {
       return aSum < bSum ? 1 : -1;
     });
 
-    res.json(products[0])
+    res.json(products[0]);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const product_1 = require("./product");
 const userSchema = new mongoose_1.default.Schema({
     name: { type: String, required: true, trim: true },
     email: {
@@ -29,7 +30,15 @@ const userSchema = new mongoose_1.default.Schema({
         enum: ["user", "admin"],
         default: "user",
     },
-    //   cart
+    cart: [
+        {
+            product: product_1.productSchema,
+            quantity: {
+                type: Number,
+                required: true,
+            },
+        },
+    ],
 });
 const User = mongoose_1.default.model("User", userSchema);
 exports.default = User;

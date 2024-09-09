@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import admin from "../middleware/admin";
 import { AuthenticatedRequest } from "../middleware/auth"; // Adjust path based on where you define the interface
-import Product from "../models/product";
+import {Product} from "../models/product";
 
 const adminRouter = express.Router();
 
